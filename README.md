@@ -2,11 +2,11 @@
 
 ## 1. Project Overview
 
-This project focuses on predicting Indian railway train delays using Machine Learning, specifically Linear Regression.
+This project predicts Indian railway train delays using Machine Learning, specifically Linear Regression.
 
 The main objective is to estimate train delays in minutes using historical railway stop records, train and station information, and historical delay patterns.
 
-The project involves data cleaning, exploratory data analysis, feature engineering, model development, and performance evaluation.
+The project covers data cleaning, exploratory data analysis, feature engineering, model development, performance evaluation, and an interactive Streamlit application.
 
 ## 2. Project Objectives
 
@@ -17,6 +17,7 @@ The project involves data cleaning, exploratory data analysis, feature engineeri
 - Develop historical features for delay prediction.
 - Build a Linear Regression model.
 - Evaluate prediction performance using regression metrics.
+- Provide an interactive app to explore predictions.
 
 ## 3. Dataset Description
 
@@ -34,7 +35,7 @@ The project uses approximately 36.5 million historical railway stop records cove
 
 The modelling table excludes records without a matching schedule.
 
-**Note:** The original dataset is not included in this repository because of its large size.
+**Note:** The original dataset and the cleaned data file (`delay_clean_v2.pkl`) are not included in this repository because of their large size.
 
 ## 4. Technologies and Libraries Used
 
@@ -45,10 +46,10 @@ The modelling table excludes records without a matching schedule.
 - Matplotlib
 - Seaborn
 - Scikit-learn
+- Streamlit
+- Joblib
 
 ## 5. Project Methodology
-
-The project follows these major steps:
 
 ### Step 1: Data Loading and Understanding
 
@@ -77,9 +78,9 @@ Creating useful prediction features, including:
 
 To avoid future-data leakage, the dataset was divided chronologically:
 
-- Training: February–October 2025
+- Training: February-October 2025
 - Validation: November 2025
-- Testing: December 2025–February 2026
+- Testing: December 2025-February 2026
 
 ### Step 6: Model Development
 
@@ -100,8 +101,6 @@ The final model was evaluated on the testing dataset using:
 
 ## 6. Final Model Performance
 
-The final Linear Regression model achieved the following results on the test dataset:
-
 | Evaluation Metric |         Result |
 | ----------------- | -------------: |
 | MAE               | 30.282 minutes |
@@ -119,15 +118,28 @@ The final Linear Regression model achieved the following results on the test dat
 
 **Prediction Bias:** The average prediction bias is approximately +0.13 minutes, indicating very little overall systematic bias.
 
-## 7. Project Limitations
+## 7. Streamlit Application
+
+The project includes an interactive Streamlit app (`app.py`) with five tabs:
+
+- **Project summary:** key results of the model
+- **Predict delay:** choose a train and a stop to see the predicted delay and how each feature contributes
+- **Model performance:** actual vs predicted, calibration and error charts
+- **Replay real records:** predicted vs actual for real test records
+- **Delay explorer:** delay patterns by month, zone, train and station
+
+The app uses the prebuilt files in the `app_files/` folder, so the original dataset is not needed to run it.
+
+## 8. Project Limitations
 
 - The dataset covers approximately one year of railway records.
 - Weather conditions are not included.
 - Railway congestion and disruption information is not included.
 - The model has difficulty predicting extremely large delays.
 - Linear Regression may not capture all complex and non-linear delay patterns.
+- The app is based on historical data (up to 7 February 2026) and is not a live forecast.
 
-## 8. Future Improvements
+## 9. Future Improvements
 
 - Include weather and railway disruption information.
 - Explore additional historical and operational features.
@@ -135,29 +147,47 @@ The final Linear Regression model achieved the following results on the test dat
 - Improve prediction accuracy for extreme delays.
 - Evaluate the model using additional historical data.
 
-## 9. Repository Structure
+## 10. Repository Structure
 
 ```text
 indian-railway-delay-prediction/
 │
-├── Indian_Railway_Delay_Prediction.ipynb
-├── README.md
-└── .gitignore
+├── Indian_Railway_Delay_Prediction.ipynb   (full analysis and model)
+├── app.py                                  (Streamlit app)
+├── build_app_files.py                      (creates the files used by the app)
+├── requirements.txt                        (Python libraries)
+├── app_files/                              (prebuilt data and model for the app)
+└── README.md
 ```
 
-## 10. How to Run the Project
+## 11. How to Run the Project
 
-1. Clone or download this GitHub repository.
-2. Install Python and Jupyter Notebook.
-3. Install the required Python libraries.
-4. Obtain the original dataset separately.
-5. Configure the dataset path in the notebook.
-6. Open the Jupyter Notebook.
-7. Execute the notebook cells in the required order.
+### Run the Streamlit app (no dataset needed)
 
-**Important:** The notebook uses a local dataset path. It must be updated to match the location of the dataset on another computer before execution.
+1. Clone or download this repository.
+2. Install the libraries:
 
-## 11. Conclusion
+```
+pip install -r requirements.txt
+```
+
+3. Start the app from the project folder:
+
+```
+streamlit run app.py
+```
+
+4. Open http://localhost:8501 in your browser.
+
+### Run the notebook
+
+1. Obtain the original dataset separately.
+2. Update the dataset path in the notebook to match your computer.
+3. Open the notebook in Jupyter and run the cells in order.
+
+**Note:** `build_app_files.py` needs `delay_clean_v2.pkl`, which is not uploaded because of its size. The prebuilt files in `app_files/` are enough to run the app.
+
+## 12. Conclusion
 
 This project demonstrates the application of Machine Learning to Indian railway train delay prediction.
 
@@ -167,11 +197,10 @@ The final model achieved an MAE of 30.282 minutes and an R² score of 0.361 on t
 
 The results demonstrate the potential of historical railway data for delay prediction while highlighting opportunities for further improvement.
 
-## 12. Author
+## 13. Author
 
 **Khushbu Sharma**
 
 Shoolini University
 
 Machine Learning Project
-
